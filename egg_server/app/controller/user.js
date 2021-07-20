@@ -9,13 +9,19 @@ module.exports = app => {
 
     async detail(){
       const { ctx } = this;
-      console.log(`ctx.params`, ctx.params)
       ctx.body = ctx.params;
     }
 
     async addUser(){
       const { ctx } = this
+      const rule = {
+        name: { type: 'string' },
+        status: { type: 'string' },
+      };
+      ctx.validate(rule);
+      const id = await ctx.service.user.userDetail(ctx.params.id);
       ctx.body = {
+        id: id,
         status: 200,
         data: ctx.request.body,
       };

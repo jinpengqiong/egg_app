@@ -4,7 +4,7 @@ module.exports = app => {
  class UserController extends app.Controller {
     async index(){
       const { ctx } = this
-      ctx.body = 'user page'
+      await ctx.render('user.html', { id : 1234567890, name: 'kim'})
     }
 
     async detail(){

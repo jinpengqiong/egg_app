@@ -12,6 +12,14 @@ module.exports = app => {
       console.log(`ctx.params`, ctx.params)
       ctx.body = ctx.params;
     }
+
+    async addUser(){
+      const { ctx } = this
+      ctx.body = {
+        status: 200,
+        data: ctx.request.body,
+      };
+    }
  }
  return UserController;
 };

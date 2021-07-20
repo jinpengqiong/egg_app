@@ -12,9 +12,6 @@ describe('test/app/controller/home.test.js', () => {
   });
 
   it('should GET /', () => {
-    return app.httpRequest()
-      .get('/')
-      .expect('hi, egg')
-      .expect(200);
+    return app.httpRequest().get('/').expect('<h1 style="color: red">Hi, egg! I am here.</h1>').expect(200);
   });
 });

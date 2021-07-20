@@ -5,7 +5,7 @@ const Controller = require('egg').Controller;
 class HomeController extends Controller {
   async index() {
     const { ctx } = this;
-    ctx.body = 'hi, egg111111';
+    ctx.body = '<h1 style="color: red">Hi, egg! I am here.</h1>';
   }
 }
 

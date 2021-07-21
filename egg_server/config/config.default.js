@@ -34,6 +34,10 @@ module.exports = appInfo => {
 
   config.ejs = {}
 
+  config.session = {
+    key: 'EGG_KING_SESS'
+  }
+
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

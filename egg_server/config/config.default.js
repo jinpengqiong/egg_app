@@ -35,8 +35,12 @@ module.exports = appInfo => {
   config.ejs = {}
 
   config.session = {
-    key: 'EGG_KING_SESS'
+    key: 'EGG_KING_SESS',
+    maxAge: 1000*1,
+    renew: true
   }
+
+  config.middleware = ['httpLog']
 
   // add your user config here
   const userConfig = {

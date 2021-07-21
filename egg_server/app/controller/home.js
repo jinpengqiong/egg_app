@@ -4,8 +4,9 @@ const Controller = require('egg').Controller;
 
 class HomeController extends Controller {
   async index() {
-    const { ctx } = this;
+    const { ctx, app } = this;
     const cookieValue = ctx.cookies.get('userInfo');
+    app.foo();
     await ctx.render('index.html')
   }
   async login() {

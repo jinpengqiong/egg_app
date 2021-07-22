@@ -19,6 +19,4 @@ exports.A = (app) => {
   });
 };
 
-exports.B = () => {
-    console.log(`this`, this);
-}
+exports.B = 1213123123

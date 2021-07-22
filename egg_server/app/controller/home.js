@@ -1,11 +1,13 @@
 'use strict';
+const { A, B } = require('../extend/application')
 
 const Controller = require('egg').Controller;
 class HomeController extends Controller {
   async index() {
     const { ctx, app } = this;
+    A(app);
     const cookieValue = ctx.cookies.get('userInfo');
-    await ctx.render('index.html')
+    await ctx.render('index.html', { B })
   }
   async login() {
     const { ctx } = this;

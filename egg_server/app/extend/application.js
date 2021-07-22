@@ -1,15 +1,15 @@
-module.exports = (app) => {
+exports.A = (app) => {
   app.once('server', (server) => {
     // websocket
-    console.log(`server on`)
+    console.log(`server on`, Date.now());
   });
   app.on('error', (err, ctx) => {
     // report error
-    console.log(`error`)
+    console.log(`error`, Date.now());
   });
   app.on('request', (ctx) => {
     // log receive request
-    console.log(`request`);
+    console.log(`request`, Date.now());
   });
   app.on('response', (ctx) => {
     // ctx.starttime is set by framework
@@ -18,3 +18,7 @@ module.exports = (app) => {
     // log total cost
   });
 };
+
+exports.B = () => {
+    console.log(`this`, this);
+}

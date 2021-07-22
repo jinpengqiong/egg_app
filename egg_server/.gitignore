@@ -1,6 +1,7 @@
 logs/
 npm-debug.log
 yarn-error.log
+httpLog.log
 node_modules/
 package-lock.json
 yarn.lock
@@ -13,3 +14,4 @@ run/
 typings/
 .nyc_output/
 public/
+

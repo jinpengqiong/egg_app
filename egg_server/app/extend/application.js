@@ -18,9 +18,3 @@ module.exports = (app) => {
     // log total cost
   });
 };
-
-module.exports = {
-  foo() {
-    console.log(`this`, this.config);
-  },
-};

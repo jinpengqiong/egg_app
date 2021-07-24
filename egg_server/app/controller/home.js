@@ -4,6 +4,8 @@ const { A, B } = require('../extend/application')
 const Controller = require('egg').Controller;
 class HomeController extends Controller {
   async index() {
+    const buf = Buffer.alloc(256);
+    const len = buf.write('www.runoob.com');
     const { ctx, app } = this;
     A(app);
     const cookieValue = ctx.cookies.get('userInfo');

@@ -14,6 +14,10 @@ module.exports = {
     enable: true,
     package: 'egg-mysql',
   },
+  sequelize: {
+    enable: true,
+    package: 'egg-sequelize'
+  }
   // had enabled by egg
   // static: {
   //   enable: true,

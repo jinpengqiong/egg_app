@@ -31,6 +31,16 @@ module.exports = app => {
       const res = await ctx.service.user.addUser(ctx.params.name);
       ctx.body = res
     }
+    async editUser(){
+      const { app, ctx } = this
+      const res = await ctx.service.user.editUser(ctx.request.body);
+      ctx.body = res;
+    }
+    async deleteUser(){
+      const { app, ctx } = this
+      const res = await ctx.service.user.deleteUser(ctx.request.body);
+      ctx.body = res;
+    }
  }
  return UserController;
 };

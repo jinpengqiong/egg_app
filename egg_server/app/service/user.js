@@ -26,10 +26,30 @@ class UserService extends Service {
   async addUser(name) {
     const { app } = this;
     try {
-      const res = await app.mysql.insert('userInfo', { id: Math.floor(Math.random() * 100), name, age: 33, address: 'Chengdu', create_date: new Date(), comments: 'no comments' });
+      const res = await app.mysql.insert('userInfo', { id: Math.floor(Math.random() * 100), name, age: 33, address: 'Chengdu', create_date: app.mysql.literals.now, comments: 'no comments' });
       return res;
     } catch (error) {
       console.log(`addUser err`, error);
+      return null;
+    }
+  }
+  async editUser(params) {
+    const { app } = this;
+    try {
+      const res = await app.mysql.update('userInfo', params);
+      return res;
+    } catch (error) {
+      console.log(`editUser err`, error);
+      return null;
+    }
+  }
+  async deleteUser(params) {
+    const { app } = this;
+    try {
+      const res = await app.mysql.delete('userInfo', params);
+      return res;
+    } catch (error) {
+      console.log(`editUser err`, error);
       return null;
     }
   }

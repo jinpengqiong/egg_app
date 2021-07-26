@@ -10,6 +10,8 @@ module.exports = app => {
   router.post('/logout', controller.home.logout);
   router.get('/api/getData', controller.api.getData);
   router.get('/user', controller.user.index);
+  router.get('/user/userList', controller.user.userList);
   router.get('/user/detail/:id', controller.user.detail);
+  router.get('/user/addUser/:name', controller.user.addUser);
   router.post('/user/detail/addUser/:id', controller.user.addUser);
 };

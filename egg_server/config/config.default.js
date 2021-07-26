@@ -42,6 +42,17 @@ module.exports = appInfo => {
 
   config.middleware = ['httpLog']
 
+  config.mysql = {
+    app: true,
+    agent: false,
+    client: {
+      host: 'localhost',
+      port: '3306',
+      user: 'root',
+      password: '1qaz2wsxQq~',
+      database: 'egg',
+    },
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

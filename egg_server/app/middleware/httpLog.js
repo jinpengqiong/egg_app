@@ -3,7 +3,6 @@ const fs = require('fs')
 
 module.exports = options => {
   return async (ctx,next) => {
-    console.log(`options`, options)
     const sTime = Date.now()
     const startTime = dayjs(Date.now()).format('YYYY-MM-DD hh:mm:ss');
     const req = ctx.request

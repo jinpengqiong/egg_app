@@ -14,6 +14,6 @@ module.exports = app => {
   router.get('/user/detail/:id', controller.user.detail);
   router.post('/user/addUser', controller.user.addUser);
   router.put('/user/editUser', controller.user.editUser);
-  router.put('/user/deleteUser', controller.user.deleteUser);
+  router.del('/user/deleteUser', controller.user.deleteUser);
   router.post('/user/detail/addUser/:id', controller.user.addUser);
 };

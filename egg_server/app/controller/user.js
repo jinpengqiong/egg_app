@@ -11,7 +11,13 @@ module.exports = app => {
       const { ctx } = this;
       // const res = await ctx.service.user.userDetail(ctx.params.id);
       const res = await ctx.model.UserInfo.findByPk(ctx.params.id);
-      ctx.body = res;
+      console.log(`res`, res)
+      if(res){
+        ctx.body = res;
+      }else{
+        ctx.body = 'ID does not exist.';
+      }
+
     }
 
     async userList(){

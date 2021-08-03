@@ -15,9 +15,11 @@ module.exports = app => {
       if(res){
         ctx.body = res;
       }else{
-        ctx.body = 'ID does not exist.';
+        ctx.body = {
+          status: 404,
+          errorInfo: 'id does not exist',
+        }
       }
-
     }
 
     async userList(){
@@ -42,7 +44,10 @@ module.exports = app => {
 
       // const res = await ctx.service.user.addUser(ctx.params.name);
       const res = await ctx.model.UserInfo.create({ id: Math.floor(Math.random() * 100), name, age, address, create_date: new Date(), comments });
-      ctx.body = res
+      ctx.body = {
+        status: '200',
+        data: res
+      }
     }
     async editUser(){
       const { app, ctx } = this

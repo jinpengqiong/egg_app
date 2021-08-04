@@ -1,87 +1,120 @@
 'use strict';
+const md5 = require('md5')
+const dayjs = require('dayjs')
 
 module.exports = app => {
  class UserController extends app.Controller {
-    async index(){
+    // async index(){
+    //   const { ctx, app } = this
+    //   // await ctx.render('user.html', { id : 1234567890, name: 'kim'})
+    //   ctx.body = 'user page'
+    // }
+
+    // async detail(){
+    //   const { ctx } = this;
+    //   // const res = await ctx.service.user.userDetail(ctx.params.id);
+    //   const res = await ctx.model.UserInfo.findByPk(ctx.params.id);
+    //   console.log(`res`, res)
+    //   if(res){
+    //     ctx.body = res;
+    //   }else{
+    //     ctx.body = {
+    //       status: 404,
+    //       errorInfo: 'id does not exist',
+    //     }
+    //   }
+    // }
+
+    // async userList(){
+    //   const { ctx } = this;
+    //   // const res = await ctx.service.user.userList()
+    //   const res = await ctx.model.UserInfo.findAll({
+    //     // where: { id : 10 }
+    //     // limit: 2,
+    //     // offset: 2
+    //   })
+    //   ctx.body = res
+    // }
+
+    // async addUser(){
+    //   const { ctx } = this
+    //   const { name, age, address, comments } = ctx.request.body;
+    //   // const rule = {
+    //   //   name: { type: 'string' },
+    //   //   status: { type: 'string' },
+    //   // };
+    //   // ctx.validate(rule);
+
+    //   // const res = await ctx.service.user.addUser(ctx.params.name);
+    //   const res = await ctx.model.UserInfo.create({ id: Math.floor(Math.random() * 100), name, age, address, create_date: new Date(), comments });
+    //   ctx.body = {
+    //     status: '200',
+    //     data: res
+    //   }
+    // }
+    // async editUser(){
+    //   const { app, ctx } = this
+    //   // const res = await ctx.service.user.editUser(ctx.request.body);
+    //   const user = await ctx.model.UserInfo.findByPk(ctx.request.body.id)
+    //   if(!user){
+    //     ctx.body = {
+    //       status: 404,
+    //       errorInfo: 'id does not exist'
+    //     }
+    //     return
+    //   }
+    //   const  res = await user.update(ctx.request.body);
+    //   ctx.body = {
+    //     status: 200,
+    //     data: res,
+    //   };
+    // }
+    // async deleteUser(){
+    //   const { app, ctx } = this
+    //   // const res = await ctx.service.user.deleteUser(ctx.request.body);
+    //   const user = await ctx.model.UserInfo.findByPk(ctx.request.body.id);
+    //   if (!user) {
+    //     ctx.body = {
+    //       status: 404,
+    //       errorInfo: 'id does not exist',
+    //     };
+    //     return;
+    //   }
+    //   const res = await user.destroy(ctx.request.body.id);
+    //   ctx.body = {
+    //     status: 200,
+    //     data: res,
+    //   };
+    // }
+
+    async register(){
       const { ctx, app } = this
-      await ctx.render('user.html', { id : 1234567890, name: 'kim'})
-    }
-
-    async detail(){
-      const { ctx } = this;
-      // const res = await ctx.service.user.userDetail(ctx.params.id);
-      const res = await ctx.model.UserInfo.findByPk(ctx.params.id);
-      console.log(`res`, res)
-      if(res){
-        ctx.body = res;
-      }else{
+      const params = ctx.request.body
+      const result = await ctx.service.user.getUser(params.username);
+      console.log(`result`, result)
+      if(result){
         ctx.body = {
-          status: 404,
-          errorInfo: 'id does not exist',
-        }
-      }
-    }
-
-    async userList(){
-      const { ctx } = this;
-      // const res = await ctx.service.user.userList()
-      const res = await ctx.model.UserInfo.findAll({
-        // where: { id : 10 }
-        // limit: 2,
-        // offset: 2
-      })
-      ctx.body = res
-    }
-
-    async addUser(){
-      const { ctx } = this
-      const { name, age, address, comments } = ctx.request.body;
-      // const rule = {
-      //   name: { type: 'string' },
-      //   status: { type: 'string' },
-      // };
-      // ctx.validate(rule);
-
-      // const res = await ctx.service.user.addUser(ctx.params.name);
-      const res = await ctx.model.UserInfo.create({ id: Math.floor(Math.random() * 100), name, age, address, create_date: new Date(), comments });
-      ctx.body = {
-        status: '200',
-        data: res
-      }
-    }
-    async editUser(){
-      const { app, ctx } = this
-      // const res = await ctx.service.user.editUser(ctx.request.body);
-      const user = await ctx.model.UserInfo.findByPk(ctx.request.body.id)
-      if(!user){
-        ctx.body = {
-          status: 404,
-          errorInfo: 'id does not exist'
+          status: 500,
+          errorInfo: '用户已存在'
         }
         return
       }
-      const  res = await user.update(ctx.request.body);
-      ctx.body = {
-        status: 200,
-        data: res,
-      };
-    }
-    async deleteUser(){
-      const { app, ctx } = this
-      // const res = await ctx.service.user.deleteUser(ctx.request.body);
-      const user = await ctx.model.UserInfo.findByPk(ctx.request.body.id);
-      if (!user) {
+      const userInfo = await ctx.service.user.addUser({
+        ...params,
+        password: md5(params.password + app.config.salt),
+        createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+      });
+      if(userInfo){
         ctx.body = {
-          status: 404,
-          errorInfo: 'id does not exist',
+          status: 200,
+          data: userInfo,
         };
-        return;
+      }else{
+        ctx.body = {
+          status: 500,
+          errorInfo: '注册失败',
+        };
       }
-      const res = await user.destroy(ctx.request.body.id);
-      ctx.body = {
-        status: 200,
-        data: res,
-      };
     }
  }
  return UserController;

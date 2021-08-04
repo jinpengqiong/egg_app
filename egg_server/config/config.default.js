@@ -56,7 +56,7 @@ module.exports = appInfo => {
 
   config.sequelize = {
     dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
-    database: 'egg',
+    database: 'egg_house',
     host: 'localhost',
     port: 3306,
     username: 'root',
@@ -69,6 +69,7 @@ module.exports = appInfo => {
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
+    salt: 'RocKim'
   };
 
   return {

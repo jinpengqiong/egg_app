@@ -153,6 +153,11 @@ module.exports = app => {
     }
   async detail(){
     const { ctx } = this
+    const username = await ctx.service.user.getUser(ctx.userName.username);
+    ctx.body = {
+      status: 200,
+      data: username,
+    };
   }
  }
  return UserController;

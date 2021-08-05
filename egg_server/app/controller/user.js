@@ -102,12 +102,17 @@ module.exports = app => {
         ...params,
         password: md5(params.password + app.config.salt),
         createTime: ctx.helper.time(),
-        updateTime: ctx.helper.time()
+        updateTime: ctx.helper.time(),
       });
+      console.log(`userInfo`, userInfo, userInfo.createTime);
       if(userInfo){
         ctx.body = {
           status: 200,
-          data: userInfo,
+          data: {
+            ...ctx.helper.unPick(userInfo.dataValues, ['password']),
+            createTime: ctx.helper.timeStamp(userInfo.createTime),
+            updateTime: ctx.helper.timeStamp(userInfo.updateTime),
+          },
         };
       }else{
         ctx.body = {

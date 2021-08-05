@@ -132,16 +132,18 @@ module.exports = app => {
       const { ctx, app } = this
       const {username, password} = ctx.request.body
       const user = await ctx.service.user.getUser(username, password);
-      console.log(`user`, user)
       if (user) {
         const token = await this.tokenGenerator();
         // ctx.session.userId = user.id
         ctx.body = {
+          status: 200,
+          data: {
           ...ctx.helper.unPick(user.dataValues, ['password']),
           createTime: ctx.helper.timeStamp(user.createTime),
           updateTime: ctx.helper.timeStamp(user.updateTime),
           token,
-        };
+          }
+        }
       } else {
         ctx.body = {
           status: 500,
@@ -149,6 +151,9 @@ module.exports = app => {
         }
       }
     }
+  async detail(){
+    const { ctx } = this
+  }
  }
  return UserController;
 };

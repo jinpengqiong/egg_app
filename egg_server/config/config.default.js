@@ -66,11 +66,17 @@ module.exports = appInfo => {
       freezeTableName: true
     }
   };
+
+  config.jwt = {
+    secret: 'This is a token secret',
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',
     salt: 'RocKim'
   };
+
+
 
   return {
     ...config,

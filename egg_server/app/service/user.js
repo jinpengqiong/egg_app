@@ -57,7 +57,8 @@ class UserService extends Service {
   async getUser(username, password) {
     const { ctx, app } = this;
     try {
-      const _where = password ? { username, password: md5(password, app.config.salt) } : { username };
+      const _where = password ? { username, password: md5(password + app.config.salt) } : { username };
+      console.log(`_where`, _where)
       const result = await ctx.model.User.findOne({
         where: _where,
       });

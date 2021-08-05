@@ -86,7 +86,15 @@ module.exports = app => {
     //     data: res,
     //   };
     // }
-
+    async tokenGenerator(){
+      const { ctx, app } = this
+      const { username } = ctx.request.body
+      const token = app.jwt.sign({
+        username,
+      }, app.config.jwt.secret);
+      ctx.session['username'] = 1
+      return token;
+    }
     async register(){
       const { ctx, app } = this
       const params = ctx.request.body
@@ -124,12 +132,15 @@ module.exports = app => {
       const { ctx, app } = this
       const {username, password} = ctx.request.body
       const user = await ctx.service.user.getUser(username, password);
+      console.log(`user`, user)
       if (user) {
-        ctx.session.userId = user.id
+        const token = await this.tokenGenerator();
+        // ctx.session.userId = user.id
         ctx.body = {
           ...ctx.helper.unPick(user.dataValues, ['password']),
           createTime: ctx.helper.timeStamp(user.createTime),
           updateTime: ctx.helper.timeStamp(user.updateTime),
+          token,
         };
       } else {
         ctx.body = {

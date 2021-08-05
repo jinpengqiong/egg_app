@@ -104,7 +104,6 @@ module.exports = app => {
         createTime: ctx.helper.time(),
         updateTime: ctx.helper.time(),
       });
-      console.log(`userInfo`, userInfo, userInfo.createTime);
       if(userInfo){
         ctx.body = {
           status: 200,
@@ -119,6 +118,24 @@ module.exports = app => {
           status: 500,
           errorInfo: '注册失败',
         };
+      }
+    }
+    async login(){
+      const { ctx, app } = this
+      const {username, password} = ctx.request.body
+      const user = await ctx.service.user.getUser(username, password);
+      if (user) {
+        ctx.session.userId = user.id
+        ctx.body = {
+          ...ctx.helper.unPick(user.dataValues, ['password']),
+          createTime: ctx.helper.timeStamp(user.createTime),
+          updateTime: ctx.helper.timeStamp(user.updateTime),
+        };
+      } else {
+        ctx.body = {
+          status: 500,
+          errMsg: '用户不存在'
+        }
       }
     }
  }

@@ -17,5 +17,6 @@ module.exports = app => {
   // router.del('/user/deleteUser', controller.user.deleteUser);
   // router.post('/user/detail/addUser/:id', controller.user.addUser);
   router.post('/api/user/register', controller.user.register);
+  router.post('/api/login', controller.user.login);
 
 };

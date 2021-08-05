@@ -70,6 +70,15 @@ module.exports = appInfo => {
   config.jwt = {
     secret: 'This is a token secret',
   };
+
+  config.redis = {
+    client:{
+      port: 6379,
+      host: '127.0.0.1',
+      password: '1qaz2wsxQq~',
+      db: 0
+    }
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

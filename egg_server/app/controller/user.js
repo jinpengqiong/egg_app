@@ -92,7 +92,8 @@ module.exports = app => {
       const token = app.jwt.sign({
         username,
       }, app.config.jwt.secret);
-      ctx.session['username'] = 1
+      // ctx.session['username'] = 1
+      await app.redis.set(username, 1, 'EX', 5);
       return token;
     }
     async register(){
@@ -130,7 +131,7 @@ module.exports = app => {
     }
     async login(){
       const { ctx, app } = this
-      const {username, password} = ctx.request.body
+      const { username, password } = ctx.request.body
       const user = await ctx.service.user.getUser(username, password);
       if (user) {
         const token = await this.tokenGenerator();
@@ -153,11 +154,24 @@ module.exports = app => {
     }
   async detail(){
     const { ctx } = this
+    console.log(`ctx.userName.username`, ctx.userName.username)
     const username = await ctx.service.user.getUser(ctx.userName.username);
-    ctx.body = {
-      status: 200,
-      data: username,
-    };
+    // const username1 = await app.redis.get(ctx.userName.username);
+    if (username) {
+      ctx.body = {
+        status: 200,
+        data: {
+          ...ctx.helper.unPick(username.dataValues, ['password']),
+          createTime: ctx.helper.timeStamp(username.createTime),
+          updateTime: ctx.helper.timeStamp(username.updateTime)
+        },
+      };
+    } else {
+      ctx.body = {
+        status: 500,
+        errMsg: '用户不存在',
+      };
+    }
   }
  }
  return UserController;

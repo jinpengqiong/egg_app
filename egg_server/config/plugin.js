@@ -16,12 +16,16 @@ module.exports = {
   },
   sequelize: {
     enable: true,
-    package: 'egg-sequelize'
+    package: 'egg-sequelize',
   },
   jwt: {
     enable: true,
-    package: 'egg-jwt'
-  }
+    package: 'egg-jwt',
+  },
+  redis: {
+    enable: true,
+    package: 'egg-redis',
+  },
   // had enabled by egg
   // static: {
   //   enable: true,

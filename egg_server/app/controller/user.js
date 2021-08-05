@@ -93,7 +93,7 @@ module.exports = app => {
         username,
       }, app.config.jwt.secret);
       // ctx.session['username'] = 1
-      await app.redis.set(username, 1, 'EX', 5);
+      await app.redis.set(username, 1, 'EX', app.config.expireTime);
       return token;
     }
     async register(){

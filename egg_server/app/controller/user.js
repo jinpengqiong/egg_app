@@ -91,7 +91,6 @@ module.exports = app => {
       const { ctx, app } = this
       const params = ctx.request.body
       const result = await ctx.service.user.getUser(params.username);
-      console.log(`result`, result)
       if(result){
         ctx.body = {
           status: 500,
@@ -102,7 +101,8 @@ module.exports = app => {
       const userInfo = await ctx.service.user.addUser({
         ...params,
         password: md5(params.password + app.config.salt),
-        createTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
+        createTime: ctx.helper.time(),
+        updateTime: ctx.helper.time()
       });
       if(userInfo){
         ctx.body = {

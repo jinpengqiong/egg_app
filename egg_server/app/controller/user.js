@@ -86,6 +86,13 @@ module.exports = app => {
     //     data: res,
     //   };
     // }
+    parseResult(ctx, userInfo){
+      return {
+        ...ctx.helper.unPick(userInfo.dataValues, ['password']),
+        createTime: ctx.helper.timeStamp(userInfo.createTime),
+        updateTime: ctx.helper.timeStamp(userInfo.updateTime),
+      };
+    }
     async tokenGenerator(){
       const { ctx, app } = this
       const { username } = ctx.request.body
@@ -117,9 +124,7 @@ module.exports = app => {
         ctx.body = {
           status: 200,
           data: {
-            ...ctx.helper.unPick(userInfo.dataValues, ['password']),
-            createTime: ctx.helper.timeStamp(userInfo.createTime),
-            updateTime: ctx.helper.timeStamp(userInfo.updateTime),
+            ...this.parseResult(ctx, userInfo),
           },
         };
       }else{
@@ -139,12 +144,10 @@ module.exports = app => {
         ctx.body = {
           status: 200,
           data: {
-          ...ctx.helper.unPick(user.dataValues, ['password']),
-          createTime: ctx.helper.timeStamp(user.createTime),
-          updateTime: ctx.helper.timeStamp(user.updateTime),
-          token,
-          }
-        }
+            ...this.parseResult(ctx, user),
+            token,
+          },
+        };
       } else {
         ctx.body = {
           status: 500,
@@ -161,9 +164,7 @@ module.exports = app => {
       ctx.body = {
         status: 200,
         data: {
-          ...ctx.helper.unPick(username.dataValues, ['password']),
-          createTime: ctx.helper.timeStamp(username.createTime),
-          updateTime: ctx.helper.timeStamp(username.updateTime)
+          ...this.parseResult(ctx, username),
         },
       };
     } else {

@@ -86,11 +86,11 @@ module.exports = app => {
     //     data: res,
     //   };
     // }
-    parseResult(ctx, userInfo){
+    parseResult(ctx, result){
       return {
-        ...ctx.helper.unPick(userInfo.dataValues, ['password']),
-        createTime: ctx.helper.timeStamp(userInfo.createTime),
-        updateTime: ctx.helper.timeStamp(userInfo.updateTime),
+        ...ctx.helper.unPick(result.dataValues, ['password']),
+        createTime: ctx.helper.timeStamp(result.createTime),
+        updateTime: ctx.helper.timeStamp(result.updateTime),
       };
     }
     async tokenGenerator(){
@@ -117,6 +117,7 @@ module.exports = app => {
         createTime: ctx.helper.time(),
         updateTime: ctx.helper.time(),
       });
+      console.log(`userInfo`, userInfo)
       if(userInfo){
         this.success({
           ...this.parseResult(ctx, userInfo),

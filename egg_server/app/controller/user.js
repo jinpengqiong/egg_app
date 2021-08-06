@@ -1,9 +1,9 @@
 'use strict';
 const md5 = require('md5')
 const dayjs = require('dayjs')
-
+const BaseController = require('./base.js')
 module.exports = app => {
- class UserController extends app.Controller {
+ class UserController extends BaseController {
     // async index(){
     //   const { ctx, app } = this
     //   // await ctx.render('user.html', { id : 1234567890, name: 'kim'})
@@ -108,10 +108,7 @@ module.exports = app => {
       const params = ctx.request.body
       const result = await ctx.service.user.getUser(params.username);
       if(result){
-        ctx.body = {
-          status: 500,
-          errorInfo: '用户已存在'
-        }
+        this.error('用户已存在');
         return
       }
       const userInfo = await ctx.service.user.addUser({
@@ -121,17 +118,11 @@ module.exports = app => {
         updateTime: ctx.helper.time(),
       });
       if(userInfo){
-        ctx.body = {
-          status: 200,
-          data: {
-            ...this.parseResult(ctx, userInfo),
-          },
-        };
+        this.success({
+          ...this.parseResult(ctx, userInfo),
+        });
       }else{
-        ctx.body = {
-          status: 500,
-          errorInfo: '注册失败',
-        };
+        this.error('注册失败');
       }
     }
     async login(){
@@ -141,18 +132,12 @@ module.exports = app => {
       if (user) {
         const token = await this.tokenGenerator();
         // ctx.session.userId = user.id
-        ctx.body = {
-          status: 200,
-          data: {
-            ...this.parseResult(ctx, user),
-            token,
-          },
-        };
+        this.success({
+          ...this.parseResult(ctx, user),
+          token,
+        });
       } else {
-        ctx.body = {
-          status: 500,
-          errMsg: '用户不存在'
-        }
+        this.error('用户已存在');
       }
     }
   async detail(){
@@ -161,17 +146,11 @@ module.exports = app => {
     const username = await ctx.service.user.getUser(ctx.userName.username);
     // const username1 = await app.redis.get(ctx.userName.username);
     if (username) {
-      ctx.body = {
-        status: 200,
-        data: {
-          ...this.parseResult(ctx, username),
-        },
-      };
+      this.success({
+        ...this.parseResult(ctx, username),
+      })
     } else {
-      ctx.body = {
-        status: 500,
-        errMsg: '用户不存在',
-      };
+      this.error('用户不存在');
     }
   }
  }

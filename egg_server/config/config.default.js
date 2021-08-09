@@ -79,9 +79,9 @@ module.exports = appInfo => {
       db: 0
     }
   };
-  config.notFounded = {
-    exclude: ['/user']
-  }
+  config.notfound = {
+    exclude: ['/user'],
+  };
   // add your user config here
   const userConfig = {
     // myAppName: 'egg',

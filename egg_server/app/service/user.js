@@ -55,19 +55,20 @@ class UserService extends BaseService {
   //   }
   // }
   async getUser(username, password) {
-    this.run(async (ctx, app) => {
+    const result = this.run(async (ctx, app) => {
       const _where = password ? { username, password: md5(password + app.config.salt) } : { username };
-      const result = await ctx.model.User.findOne({
+      console.log(`_where`, _where)
+      return await ctx.model.User.findOne({
         where: _where,
       });
-      return result;
     });
+    return result;
   }
   async addUser(params) {
-    this.run(async (ctx) => {
-      const result = await ctx.model.User.create(params);
-      return result;
+    const result = this.run(async (ctx) => {
+      return await ctx.model.User.create(params);
     })
+    return result;
   }
 }
 

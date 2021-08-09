@@ -130,6 +130,7 @@ module.exports = app => {
       const { ctx, app } = this
       const { username, password } = ctx.request.body
       const user = await ctx.service.user.getUser(username, password);
+      console.log(`user`, user)
       if (user) {
         const token = await this.tokenGenerator();
         // ctx.session.userId = user.id

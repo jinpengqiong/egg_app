@@ -14,7 +14,6 @@ class UpdateCache extends Subscription {
     const res = await this.ctx.curl('https://api.apiopen.top/getSingleJoke?sid=28654780', {
       dataType: 'json',
     });
-    console.log(`UpdateCache subscribe`, res, new Date());
     this.ctx.app.cache = res.result;
   }
 }

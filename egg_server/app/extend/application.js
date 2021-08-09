@@ -19,4 +19,4 @@ exports.A = (app) => {
   });
 };
 
-exports.B = 1213123123
+exports.B = 11111

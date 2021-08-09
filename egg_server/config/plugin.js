@@ -1,5 +1,5 @@
 'use strict';
-
+const path = require('path')
 /** @type Egg.EggPlugin */
 module.exports = {
   validate: {
@@ -25,6 +25,10 @@ module.exports = {
   redis: {
     enable: true,
     package: 'egg-redis',
+  },
+  notFound: {
+    enable: true,
+    path: path.join(__dirname, '../lib/plugin/egg-notFound'),
   },
   // had enabled by egg
   // static: {

@@ -8,6 +8,7 @@ class AppBootHook {
   }
 
   async didLoad() {
+    const mids = this.app.config.coreMiddlewares;
     this.app.config.coreMiddlewares.push('notfound');
   }
 

@@ -142,7 +142,6 @@ module.exports = app => {
     }
   async detail(){
     const { ctx } = this
-    console.log(`ctx.userName.username`, ctx.userName.username)
     const username = await ctx.service.user.getUser(ctx.userName.username);
     // const username1 = await app.redis.get(ctx.userName.username);
     if (username) {

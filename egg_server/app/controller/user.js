@@ -95,10 +95,14 @@ module.exports = app => {
     }
     async tokenGenerator(){
       const { ctx, app } = this
-      const { username } = ctx.request.body
-      const token = app.jwt.sign({
-        username,
-      }, app.config.jwt.secret);
+      const { username, password } = ctx.request.body
+      const token = app.jwt.sign(
+        {
+          username,
+          password,
+        },
+        app.config.jwt.secret
+      )
       // ctx.session['username'] = 1
       await app.redis.set(username, 1, 'EX', app.config.expireTime);
       return token;
@@ -142,6 +146,7 @@ module.exports = app => {
     }
   async detail(){
     const { ctx } = this
+    console.log(`ctx.userName.username`, ctx.userName.username)
     const username = await ctx.service.user.getUser(ctx.userName.username);
     // const username1 = await app.redis.get(ctx.userName.username);
     if (username) {

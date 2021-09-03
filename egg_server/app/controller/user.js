@@ -146,7 +146,6 @@ module.exports = app => {
     }
   async detail(){
     const { ctx } = this
-    console.log(`ctx.userName`, ctx.userName)
     const username = await ctx.service.user.getUser(ctx.userName);
     const username1 = await app.redis.get(ctx.userName);
     console.log(`username1`, username1)
@@ -157,6 +156,12 @@ module.exports = app => {
     } else {
       this.error('用户不存在');
     }
+  }
+  async allUsersDetail(){
+    const { ctx } = this
+    const users = await ctx.service.user.getAllUser();
+    console.log(`users`, users)
+    ctx.body = users;
   }
 }
 return UserController;

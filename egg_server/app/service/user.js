@@ -62,6 +62,12 @@ class UserService extends BaseService {
       });
     });
   }
+  async getAllUser() {
+    return this.run(async (ctx, app) => {
+      return await ctx.model.User.findAll({
+      });
+    });
+  }
   async addUser(params) {
     return this.run(async (ctx) => {
       return await ctx.model.User.create(params);

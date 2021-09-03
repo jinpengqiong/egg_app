@@ -160,7 +160,6 @@ module.exports = app => {
   async allUsersDetail(){
     const { ctx } = this
     const users = await ctx.service.user.getAllUser();
-    console.log(`users`, users)
     ctx.body = users;
   }
 }

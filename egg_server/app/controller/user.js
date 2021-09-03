@@ -146,9 +146,10 @@ module.exports = app => {
     }
   async detail(){
     const { ctx } = this
-    console.log(`ctx.userName.username`, ctx.userName.username)
-    const username = await ctx.service.user.getUser(ctx.userName.username);
-    // const username1 = await app.redis.get(ctx.userName.username);
+    console.log(`ctx.userName`, ctx.userName)
+    const username = await ctx.service.user.getUser(ctx.userName);
+    const username1 = await app.redis.get(ctx.userName);
+    console.log(`username1`, username1)
     if (username) {
       this.success({
         ...this.parseResult(ctx, username),
@@ -157,6 +158,6 @@ module.exports = app => {
       this.error('用户不存在');
     }
   }
- }
- return UserController;
+}
+return UserController;
 };

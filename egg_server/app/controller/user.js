@@ -148,7 +148,6 @@ module.exports = app => {
     const { ctx } = this
     const username = await ctx.service.user.getUser(ctx.userName);
     const username1 = await app.redis.get(ctx.userName);
-    console.log(`username1`, username1)
     if (username) {
       this.success({
         ...this.parseResult(ctx, username),

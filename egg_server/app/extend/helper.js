@@ -11,7 +11,7 @@ module.exports = {
     let obj = {}
     if(Array.isArray(arr)){
       for (const key in source) {
-        if (source.hasOwnProperty.call(source, key) && !arr.includes(key)) {
+        if (source.hasOwnProperty(source, key) && !arr.includes(key)) {
           const element = source[key];
           obj[key] = element;
         }

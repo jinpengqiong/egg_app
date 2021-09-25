@@ -55,7 +55,7 @@ module.exports = appInfo => {
   };
 
   config.sequelize = {
-    dialect: 'mysql', // support: mysql, mariadb, postgres, mssql
+    dialect: 'mysql',
     database: 'egg_house',
     host: 'localhost',
     port: 3306,
